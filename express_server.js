@@ -10,12 +10,23 @@ const urlDatabase = {
 };
 app.use(express.urlencoded({ extended: true }));
 
-app.get("/", (req, res) => {
-  res.send("Hello!");
-});
-
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
+});
+
+app.post("/urls/:id/delete", (req, res) => {
+  delete urlDatabase["9sm5xK"];
+  res.redirect("/urls");
+  });
+  
+  app.post("/urls", (req, res) => {
+    console.log(req.body); 
+    Object.assign(urlDatabase, req.body);
+    res.redirect("/urls/:id"); 
+  });
+
+app.get("/", (req, res) => {
+  res.send("Hello!");
 });
 
 app.get("/urls.json", (req, res) => {
