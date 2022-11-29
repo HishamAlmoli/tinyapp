@@ -21,9 +21,13 @@ app.get("/urls.json", (req, res) => {
     res.json(urlDatabase);
 });
 
-app.get("/hello", (req, res) => {
-    res.send("<html><body>Hello <b>World</b></body></html>\n");
-});
+// app.get("/hello", (req, res) => {
+//     res.send("<html><body>Hello <b>World</b></body></html>\n");
+// });
+app.get("/urls/:id", (req, res) => {
+    const templateVars = { id: req.params.id, longURL: /* What goes here? */ };
+    res.render("urls_show", templateVars);
+  });
 
 app.get("/urls", (req, res) => {
     const templateVars = { urls: urlDatabase };
