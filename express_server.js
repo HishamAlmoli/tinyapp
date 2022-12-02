@@ -17,45 +17,50 @@ app.listen(PORT, () => {
 app.post("/urls/:id/delete", (req, res) => {
   delete urlDatabase["9sm5xK"];
   res.redirect("/urls");
-  });
+});
   
-  app.post("/urls", (req, res) => {
-    console.log(req.body); 
-    Object.assign(urlDatabase, req.body);
-    res.redirect("/urls/:id"); 
-  });
+app.post("/urls/:id", (req, res) => {
+  urlDatabase[req.params.id].longURL = req.body.longURL;
+  res.redirect("/urls");
+});
+
+app.post("/urls", (req, res) => {
+  console.log(req.body); 
+  Object.assign(urlDatabase, req.body);
+  res.redirect("/urls/:id"); 
+});
 
 app.get("/", (req, res) => {
   res.send("Hello!");
 });
 
 app.get("/urls.json", (req, res) => {
-    res.json(urlDatabase);
+  res.json(urlDatabase);
 });
 
 // app.get("/hello", (req, res) => {
 //     res.send("<html><body>Hello <b>World</b></body></html>\n");
 // });
 app.get("/urls/:id", (req, res) => {
-    const templateVars = { id: req.params.id, longURL: "http://www.lighthouselabs.ca" };
-    res.render("urls_show", templateVars);
+  const templateVars = { id: req.params.id, longURL: "http://www.lighthouselabs.ca" };
+  res.render("urls_show", templateVars);
 });
 
 app.get("/urls", (req, res) => {
-    const templateVars = { urls: urlDatabase };
-    res.render("urls_index", templateVars);
+  const templateVars = { urls: urlDatabase };
+  res.render("urls_index", templateVars);
 });
 
 app.get("/urls/new", (req, res) => {
-    res.render("urls_new");
+  res.render("urls_new");
 });
 
 app.get("/hello", (req, res) => {
-    const templateVars = { greeting: "Hello World!" };
-    res.render("hello_world", templateVars);
+  const templateVars = { greeting: "Hello World!" };
+  res.render("hello_world", templateVars);
 });
 
 app.get("/u/:id", (req, res) => {
-    // const longURL = ...
-    res.redirect(longURL);
+  // const longURL = ...
+  res.redirect(longURL);
 });
