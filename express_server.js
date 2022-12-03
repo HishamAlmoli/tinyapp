@@ -1,6 +1,8 @@
 const express = require("express");
 const app = express();
-const PORT = 8080; // default port 8080
+const PORT = 8080; 
+const cookieSession = require("cookie-session");
+
 
 app.set("view engine", "ejs");
 
@@ -28,6 +30,15 @@ app.post("/urls", (req, res) => {
   console.log(req.body); 
   Object.assign(urlDatabase, req.body);
   res.redirect("/urls/:id"); 
+});
+
+app.post("/login", (req, res) => {
+  const password = req.body.password;
+  const userEmail = req.body.email;
+  const foundUser = getUserbyEmail(userEmail, users);
+  const isPasswordCorrect = bcrypt.compareSync(password, foundUser.password);
+
+  return res.status(403).send("email cannot be found");
 });
 
 app.get("/", (req, res) => {
