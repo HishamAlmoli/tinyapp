@@ -8,32 +8,36 @@
       data-target="#navbarNavAltMarkup"
       aria-controls="navbarNavAltMarkup"
       aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon"></span>
+      aria-label="Toggle navigation">
+
+    <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <a class="nav-item nav-link" href="/urls">My URLs</a>
-        <a class="nav-item nav-link" href="/urls/new">Create New URL</a>
+        <a class="nav-item nav-link" 
+        href="/urls">
+          My URLs
+        </a>
+        <a class="nav-item nav-link" 
+        href="/urls/new">
+          Add URL
+        </a>
         <div class="navbar-nav"></div>
       </div>
     </div>
     <% if(!user) { %>
-    <a
-      class="nav-item nav-link"
-      href="/login"
-      >Login</a
-    >
-    <a
-      class="nav-item nav-link"
-      href="/register"
-      >Register</a
-    >
+    <a class="nav-item nav-link" href="/login">
+      Login
+    </a>
+    <a class="nav-item nav-link" href="/register">
+      Register
+    </a>
     <% } %> <% if(user) { %>
     <form method="POST" action="/logout">
-      <%= `Logged in as: ${user.email}!` %>
-      <button type="logout" class="btn btn-outline-dark">Logout</button>
+      <%= `User Name: ${user.email}!` %>
+      <button type="logout" class="btn btn-outline-dark">
+        Logout
+      </button>
     </form>
     <% } %>
   </nav>
