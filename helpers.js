@@ -1,4 +1,3 @@
-
 const getUserbyEmail = (email, users) => {
     //console.log(`users-helpers ${users}`);
     for (const userId in users) {
@@ -10,7 +9,10 @@ const getUserbyEmail = (email, users) => {
     }
   }
   
+  //getshortUrlId function generates a unique random string shortURL
   const getshortUrlId = () => Math.random().toString(36).substring(2, 8);
+
+  //getnewUserId function generates a unique random string UserId
   const getnewUserId = () => Math.random().toString(36).substring(2, 8);
 
   const urlsForUser = (userID, urlDatabase) => {

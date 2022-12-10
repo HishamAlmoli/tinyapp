@@ -28,37 +28,40 @@ const {
   urlsForUser
 } = require('./helpers');
 
-const urlDatabase = {
-  b6UTxQ: {
-    longURL: "https://www.tsn.ca",
-    userID: "aJ48lW",
-  },
-  i3BoGr: {
-    longURL: "https://www.google.ca",
-    userID: "aJ48lW",
-  },
-};
+const urlDatabase = require('./dataUrls');
+const users = require('./users');
 
-const users = {
+// const urlDatabase = {
+//   b6UTxQ: {
+//     longURL: "https://www.tsn.ca",
+//     userID: "aJ48lW",
+//   },
+//   i3BoGr: {
+//     longURL: "https://www.google.ca",
+//     userID: "aJ48lW",
+//   },
+// };
 
-  'A1': {
-    id: 'A1',
-    email: 'q@q',
-    password: 'q'
-  },
+// const users = {
 
-  '123': {
-    id: '123',
-    email: '123@test.com',
-    password: '$2a$10$bZzqDIZ5HuO5.q2DzaTBXuW3bzUD66Takp7aA5e181kpo/Aam3wDO'
-  },
+//   'A1': {
+//     id: 'A1',
+//     email: 'q@q',
+//     password: 'q'
+//   },
 
-  '1234': {
-    id: '1234',
-    email: 'he@gmail.com',
-    password: '$2a$10$LQN2WVqXcTupAhhOdEwyoOxKgPx/DxPYBlcJXj07AKqxP5jhojKta'
-  }
-};
+//   '123': {
+//     id: '123',
+//     email: '123@test.com',
+//     password: '$2a$10$bZzqDIZ5HuO5.q2DzaTBXuW3bzUD66Takp7aA5e181kpo/Aam3wDO'
+//   },
+
+//   '1234': {
+//     id: '1234',
+//     email: 'he@gmail.com',
+//     password: '$2a$10$LQN2WVqXcTupAhhOdEwyoOxKgPx/DxPYBlcJXj07AKqxP5jhojKta'
+//   }
+// };
 
 app.post("/logout", (req, res) => {
   req.session = null;
