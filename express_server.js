@@ -13,6 +13,7 @@ app.use(
     extended: true 
   })
 );
+
 app.use(
   cookieSession({
   name: 'session',
@@ -20,20 +21,12 @@ app.use(
   })
 );
 
-const getUserbyEmail = require("./helpers.js");
-
-const getshortUrlId = () => Math.random().toString(36).substring(2, 8);
-const getnewUserId = () => Math.random().toString(36).substring(2, 8);
-
-const urlsForUser = (userID, urlDatabase) => {
-  const urls = {};
-  for (const shortURL in urlDatabase) {
-    if (urlDatabase[shortURL].userID === userID) {
-      urls[shortURL] = urlDatabase[shortURL].longURL;
-    }
-  }
-  return urls;
-};
+const {
+  getUserbyEmail,
+  getshortUrlId,
+  getnewUserId,
+  urlsForUser
+} = require('./helpers');
 
 const urlDatabase = {
   b6UTxQ: {
