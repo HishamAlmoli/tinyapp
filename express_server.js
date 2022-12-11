@@ -43,7 +43,8 @@ app.post("/logout", (req, res) => {
 });
 
 app.get("/", (req, res) => {
-  res.send(`Hello!`);
+  res.redirect("/login");
+  //res.send(`Hello!`);
 });
 
 app.get("/urls.json", (req, res) => {
