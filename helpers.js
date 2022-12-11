@@ -1,20 +1,23 @@
+/* 
+    Made by: Hisham Almoli
+    Date: Dec 5, 2022
+ */
 const getUserbyEmail = (email, users) => {
-    //console.log(`users-helpers ${users}`);
     for (const userId in users) {
       const user = users[userId];
-      //console.log(`users-helpers.email ${user.email}`);
       if (user.email === email) {
         return user;
       }
     }
   }
   
-  //getshortUrlId function generates a unique random string shortURL
+  /* getshortUrlId function generates a unique random string shortURL */
   const getshortUrlId = () => Math.random().toString(36).substring(2, 8);
 
-  //getnewUserId function generates a unique random string UserId
+  /* getnewUserId function generates a unique random string UserId */
   const getnewUserId = () => Math.random().toString(36).substring(2, 8);
 
+  /* urlsForUser function connect shortURL with longURL */
   const urlsForUser = (userID, urlDatabase) => {
     const urls = {};
     for (const shortURL in urlDatabase) {

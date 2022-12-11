@@ -1,3 +1,7 @@
+/* 
+    Made by: Hisham Almoli
+    Date: Dec 5, 2022
+ */
 const express = require("express");
 const morgan = require("morgan");
 const app = express();
@@ -28,41 +32,11 @@ const {
   urlsForUser
 } = require('./helpers');
 
+/* // Databases \\ */
 const urlDatabase = require('./dataUrls');
 const users = require('./users');
 
-// const urlDatabase = {
-//   b6UTxQ: {
-//     longURL: "https://www.tsn.ca",
-//     userID: "aJ48lW",
-//   },
-//   i3BoGr: {
-//     longURL: "https://www.google.ca",
-//     userID: "aJ48lW",
-//   },
-// };
-
-// const users = {
-
-//   'A1': {
-//     id: 'A1',
-//     email: 'q@q',
-//     password: 'q'
-//   },
-
-//   '123': {
-//     id: '123',
-//     email: '123@test.com',
-//     password: '$2a$10$bZzqDIZ5HuO5.q2DzaTBXuW3bzUD66Takp7aA5e181kpo/Aam3wDO'
-//   },
-
-//   '1234': {
-//     id: '1234',
-//     email: 'he@gmail.com',
-//     password: '$2a$10$LQN2WVqXcTupAhhOdEwyoOxKgPx/DxPYBlcJXj07AKqxP5jhojKta'
-//   }
-// };
-
+/* post request: logout button clears the session and redirects to login page */
 app.post("/logout", (req, res) => {
   req.session = null;
   res.redirect("/login");
@@ -73,13 +47,13 @@ app.get("/", (req, res) => {
 });
 
 app.get("/urls.json", (req, res) => {
-  //res.json(urlDatabase);
   res.send(`<html><body>
   <div>Our URLs Database => ${JSON.stringify(urlDatabase)}</div>
   <div>Our Users Database => ${JSON.stringify(users)}</div>
   </body></html>`);
 });
 
+/* get request: rendereds urls_index page */
 app.get("/urls", (req, res) => {
   const userDetails = (users[req.session["user_id"]]);
 
@@ -94,6 +68,7 @@ app.get("/urls", (req, res) => {
   res.render("urls_index", templateVars);
 });
 
+/* get request: rendereds urls_register page */
 app.get("/register", (req, res) => {
   const userDetails = (users[req.session["user_id"]]);
   if (userDetails) {
@@ -102,6 +77,7 @@ app.get("/register", (req, res) => {
     res.render("urls_register");
 });
 
+/* post request: user inputs an email and password to generate userID and redirects to login page */
 app.post("/register", (req, res) => {
   const newUserId = getnewUserId();
   const password = req.body.password;
@@ -134,6 +110,7 @@ app.post("/register", (req, res) => {
   res.redirect("/urls");
 });
 
+/* get request: rendereds urls_login page */
 app.get("/login", (req, res) => {
   const userDetails = (users[req.session.user_id]);
   if (userDetails) {
@@ -142,6 +119,7 @@ app.get("/login", (req, res) => {
     return res.render("urls_login");
 });
 
+/* post request: if user input is ok redirects to urls page */
 app.post("/login", (req, res) => {
   const password = req.body.password;
   const userEmail = req.body.email;
@@ -183,6 +161,7 @@ app.post("/login", (req, res) => {
   }
 });
 
+/* post request: delets url from the database and redirects to urls page */
 app.post(`/urls/:id/delete`, (req, res) => {
   const userDetails = (users[req.session["user_id"]]);
   if (!userDetails) {
@@ -195,6 +174,7 @@ app.post(`/urls/:id/delete`, (req, res) => {
   res.redirect("/urls");
 });
 
+/* post request: redirects to urls page with the shortUrlId parameter */
 app.post("/urls", (req, res) => {
   const userDetails = (users[req.session["user_id"]]);
   if (!userDetails) {
@@ -211,11 +191,13 @@ app.post("/urls", (req, res) => {
   res.redirect(`/urls/${shortUrlId}`);
 });
 
+/* post request: redirects to urls page */
 app.post("/urls/:id", (req, res) => {
   urlDatabase[req.params.id].longURL = req.body.longURL;
   res.redirect("/urls");
 });
 
+/* get request: rendereds urls_new page or redirects to login page in case there is no session */
 app.get("/urls/new", (req, res) => {
   const templateVars = { urls: urlDatabase, user: users[req.session["user_id"]] };
   const userDetails = (users[req.session["user_id"]]);
@@ -225,6 +207,7 @@ app.get("/urls/new", (req, res) => {
   res.render("urls_new", templateVars);
 });
 
+/* get request: rendereds urls_show page based on :id parameter */
 app.get("/urls/:id", (req, res) => {
   const userDetails = (users[req.session["user_id"]]);
   if (!userDetails) {
@@ -237,6 +220,7 @@ app.get("/urls/:id", (req, res) => {
   res.render("urls_show", templateVars);
 });
 
+/* get request: redirect to longURL based on urlDatabase */
 app.get("/u/:id", (req, res) => {
   const userDetails = users[req.session["user_id"]];
 
@@ -248,6 +232,7 @@ app.get("/u/:id", (req, res) => {
   res.redirect(longURL);
 });
 
+/* get request: hello page */
 app.get("/hello", (req, res) => {
   res.send('<html><body>Hello <b>World</b></body></html>');
 });

@@ -1,4 +1,11 @@
-const users = {
+/* 
+    Made by: Hisham Almoli
+    Date: Dec 5, 2022
+ */
+
+    /* System users Database */
+
+    const users = {
 
     'A1': {
       id: 'A1',
