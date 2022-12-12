@@ -7,6 +7,7 @@ const app = express();
 const PORT = 8080; 
 const bcrypt = require("bcryptjs");
 const cookieSession = require("cookie-session");
+const morgan = require("morgan");
 
 app.set("view engine", "ejs");
 
@@ -15,7 +16,7 @@ app.use(
     extended: true 
   })
 );
-
+app.use(morgan("dev"));
 app.use(
   cookieSession({
   name: 'session',

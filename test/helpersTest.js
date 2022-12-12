@@ -23,15 +23,16 @@ const testUsers = {
 };
 
 describe('getUserByEmail', function() {
-  it('undefined', function() {
-    const user = helper.getUserbyEmail("a@a.com",testUsers);
-    const expectedOutput = "undefined";
+  it('undefined user', function() {
+    const user = helper.getUserbyEmail("fake@fake.com",testUsers);
+    console.log(`user: ${user}`);
+    const expectedOutput = undefined;
     assert.strictEqual(user, expectedOutput);
   });
 
-  // it('should return a user with valid email', function () {
-  //   const user = helper.getUserbyEmail("123@test.com", testUsers)
-  //   const expectedOutput = "123";
-  //   assert.strictEqual(user, expectedOutput);
-  // });
+  it('should return a user with valid email', function () {
+    const user = helper.getUserbyEmail("123@test.com", testUsers)
+    const expectedOutput = "123";
+    assert.strictEqual(user.id, expectedOutput);
+  });
 });
