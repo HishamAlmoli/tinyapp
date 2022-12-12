@@ -3,14 +3,12 @@
     Date: Dec 5, 2022
  */
 const express = require("express");
-//const morgan = require("morgan");
 const app = express();
-const PORT = 8080; // default port 8080
+const PORT = 8080; 
 const bcrypt = require("bcryptjs");
 const cookieSession = require("cookie-session");
 
 app.set("view engine", "ejs");
-//app.use(morgan("dev"));
 
 app.use(
   express.urlencoded({ 
@@ -113,7 +111,7 @@ app.post("/register", (req, res) => {
   req.session.user_id = newUserId;
   const user = { id: newUserId, email: req.body.email, password: hashedPassword };
 
-  console.log(`user: ${user}`)
+  //console.log(`user: ${user}`)
   users[newUserId] = user;
   res.redirect("/urls");
 });
@@ -132,14 +130,6 @@ app.post("/login", (req, res) => {
   const password = req.body.password;
   const userEmail = req.body.email;
   const foundUser = getUserbyEmail(userEmail, users);
-  console.log(`users: ${JSON.stringify(users)}`)
-  console.log(`userEmail: ${userEmail}`)
-  console.log(`user1..:`)
-  console.log(`user..: ${password}`)
-  console.log(`user..: ${foundUser}`)
-  console.log(`user..: ${foundUser.password}`)
-  console.log(`user..: ${bcrypt.hashSync(password, 10)}`)
-  
 
   if (req.body.email === "") {
     return res.status(400).send(`<html><body>
@@ -164,13 +154,6 @@ app.post("/login", (req, res) => {
     if (bcrypt.compareSync(password, foundUser.password)){
       isPasswordCorrect = true;
     }
-    // if ( bcrypt.hashSync(password, 10) === foundUser.password) {
-    //   // console.log(`user: ${password}`)
-    //   // console.log(`user: ${foundUser.password}`)
-    //   // console.log(`user: ${bcrypt.hashSync(password, 10)}`)
-
-    //   isPasswordCorrect = true;
-    // };
     if (!isPasswordCorrect) {
       return res.status(403).send(`<html><body>
       Ooops, your password is incorrect!!!
