@@ -7,7 +7,7 @@ const app = express();
 const PORT = 8080; 
 const bcrypt = require("bcryptjs");
 const cookieSession = require("cookie-session");
-const morgan = require("morgan");
+// const morgan = require("morgan");
 
 app.set("view engine", "ejs");
 
@@ -16,7 +16,7 @@ app.use(
     extended: true 
   })
 );
-app.use(morgan("dev"));
+// app.use(morgan("dev"));
 app.use(
   cookieSession({
   name: 'session',
@@ -79,7 +79,7 @@ app.get("/register", (req, res) => {
   if (userDetails) {
     return res.redirect("/urls");
   } else
-    res.render("urls_register");
+    res.render("urls_register", {user: userDetails});
 });
 
 /* post request: user inputs an email and password to generate userID and redirects to login page */
@@ -123,7 +123,7 @@ app.get("/login", (req, res) => {
   if (userDetails) {
     return res.redirect("/urls");
   } else
-    return res.render("urls_login");
+    return res.render("urls_login", {user: userDetails});
 });
 
 /* post request: if user input is ok redirects to urls page */

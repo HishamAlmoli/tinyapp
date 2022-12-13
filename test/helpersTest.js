@@ -25,7 +25,6 @@ const testUsers = {
 describe('getUserByEmail', function() {
   it('undefined user', function() {
     const user = helper.getUserbyEmail("fake@fake.com",testUsers);
-    console.log(`user: ${user}`);
     const expectedOutput = undefined;
     assert.strictEqual(user, expectedOutput);
   });

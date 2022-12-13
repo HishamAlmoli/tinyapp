@@ -14,22 +14,31 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <a class="nav-item nav-link" href="/urls">My URLs</a>
-        <a class="nav-item nav-link" href="/urls/new">Create New URL</a>
+        <a class="nav-item nav-link" 
+        href="/urls">
+          My URLs
+        </a>
+        <a class="nav-item nav-link" 
+        href="/urls/new">
+          Add URL
+        </a>
+        <div class="navbar-nav"></div>
       </div>
     </div>
-    <% if (typeof user_id !== 'undefined') {%>
+    <% if(!user) { %>
+    <a class="nav-item nav-link" href="/login">
+      Login
+    </a>
+    <a class="nav-item nav-link" href="/register">
+      Register
+    </a>
+    <% } else { %>
     <form method="POST" action="/logout">
-    <div class="form-group">
-      <label>Welcome <%= user.email %>!</label>
-      <button type="submit" class="btn btn-outline-dark">Logout</button>
-    </div>
+      <%= `User Name: ${user.email}!` %>
+      <button type="logout" class="btn btn-outline-dark">
+        Logout
+      </button>
     </form>
-      <% } else{ %>
-        <div class="fancy">
-        <a class="btn btn-dark" href="/login" style="margin: 1em">Login</a>
-        <a class="btn btn-dark" href="/register" style="margin: 1em">Register</a>
-      </div>
     <% } %>
   </nav>
 </header>
