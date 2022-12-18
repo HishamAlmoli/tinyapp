@@ -7,7 +7,6 @@ const app = express();
 const PORT = 8080; 
 const bcrypt = require("bcryptjs");
 const cookieSession = require("cookie-session");
-// const morgan = require("morgan");
 
 app.set("view engine", "ejs");
 
@@ -16,7 +15,6 @@ app.use(
     extended: true 
   })
 );
-// app.use(morgan("dev"));
 app.use(
   cookieSession({
   name: 'session',
@@ -48,7 +46,6 @@ app.get("/logout", (req, res) => {
 
 app.get("/", (req, res) => {
   res.redirect("/login");
-  //res.send(`Hello!`);
 });
 
 app.get("/urls.json", (req, res) => {
@@ -112,7 +109,6 @@ app.post("/register", (req, res) => {
   req.session.user_id = newUserId;
   const user = { id: newUserId, email: req.body.email, password: hashedPassword };
 
-  //console.log(`user: ${user}`)
   users[newUserId] = user;
   res.redirect("/urls");
 });
