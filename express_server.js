@@ -167,40 +167,14 @@ app.post("/login", (req, res) => {
   }
 });
 
-/* get request: rendereds urls_show page based on :id parameter */
-app.get("/urls/:id", (req, res) => {
-  const userDetails = (users[req.session["user_id"]]);
-  if (!userDetails) {
-    return res.status(401).send('Unable to access. login first to see URLs');
-  }
-  if (userDetails.id !== urlDatabase[req.params.id].userID) {
-    return res.status(401).send("cannot view URL that you do not own");
-  }
-  const templateVars = { id: req.params.id, longURL: urlDatabase[req.params.id], user: users[req.session["user_id"]] };
-  res.render("urls_show", templateVars);
-});
-
-/* post request: redirects to urls page */
-app.post("/urls/:id", (req, res) => {
-  const userDetails = (users[req.session["user_id"]]);
-  if (!userDetails) {
-    return res.status(401).send('Unable to access. login first to see URLs');
-  }
-  if (userDetails.id !== urlDatabase[req.params.id].userID) {
-    return res.status(401).send("cannot view URL that you do not own");
-  }
-  urlDatabase[req.params.id].longURL = req.body.longURL;
-  res.redirect("/urls");
-});
-
 /* post request: delets url from the database and redirects to urls page */
 app.post(`/urls/:id/delete`, (req, res) => {
   const userDetails = (users[req.session["user_id"]]);
   if (!userDetails) {
-    return res.status(401).send('Unable to access. login first to see URLs');
-  }
-  if (userDetails.id !== urlDatabase[req.params.id].userID) {
-    return res.status(401).send("cannot delete URL that you do not own");
+    return res.status(401).send(`<html><body>
+    Ooops, You cannot delete URL that doesn't belong to you!!!
+    <a href="http://localhost:8080/urls">Please go back to the urls page</a>
+    </body></html>`);
   }
   delete urlDatabase[req.params.id];
   res.redirect("/urls");
@@ -223,6 +197,12 @@ app.post("/urls", (req, res) => {
   res.redirect(`/urls/${shortUrlId}`);
 });
 
+/* post request: redirects to urls page */
+app.post("/urls/:id", (req, res) => {
+  urlDatabase[req.params.id].longURL = req.body.longURL;
+  res.redirect("/urls");
+});
+
 /* get request: rendereds urls_new page or redirects to login page in case there is no session */
 app.get("/urls/new", (req, res) => {
   const templateVars = { urls: urlDatabase, user: users[req.session["user_id"]] };
@@ -231,6 +211,19 @@ app.get("/urls/new", (req, res) => {
     return res.redirect("/login");
   }
   res.render("urls_new", templateVars);
+});
+
+/* get request: rendereds urls_show page based on :id parameter */
+app.get("/urls/:id", (req, res) => {
+  const userDetails = (users[req.session["user_id"]]);
+  if (!userDetails) {
+    return res.status(401).send('Unable to access. login first to see URLs');
+  }
+  if (userDetails.id !== urlDatabase[req.params.id].userID) {
+    return res.status(401).send("cannot view URL that you do not own");
+  }
+  const templateVars = { id: req.params.id, longURL: urlDatabase[req.params.id], user: users[req.session["user_id"]] };
+  res.render("urls_show", templateVars);
 });
 
 /* get request: redirect to longURL based on urlDatabase */
