@@ -195,6 +195,13 @@ app.post("/urls", (req, res) => {
 
 /* post request: redirects to urls page */
 app.post("/urls/:id", (req, res) => {
+  const userDetails = (users[req.session["user_id"]]);
+  if (!userDetails) {
+    return res.status(401).send(`<html><body>
+    Ooops, You cannot update URL that doesn't belong to you!!!
+    <a href="http://localhost:8080/urls">Please go back to the urls page</a>
+    </body></html>`);
+  }
   urlDatabase[req.params.id].longURL = req.body.longURL;
   res.redirect("/urls");
 });
